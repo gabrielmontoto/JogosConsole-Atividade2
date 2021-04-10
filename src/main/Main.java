@@ -4,7 +4,7 @@ public class Main {
 
 	public static void inicializa(float[] vet, int max) {
 		for (int i = 0; i < vet.length; i++)
-			vet[i] = (float) (Math.random() * (float)max)
+			vet[i] = (float) (Math.random() * (float)max);
 	}
 	
 	public static void processor(float[] A, float[] B, float[] C, int n) {
@@ -37,7 +37,7 @@ public class Main {
 		processor(vetA, vetB, vetC, size);
 		
 		System.out.println("Versão Sequencial");
-		System.out.println("Soma: " + somaVet(VetC, size));
+		//System.out.println("Soma: " + somaVet(VetC, size));
 		
 		for (int i = 0; i < nThreads; i++) {
 			int start = i * elemThread;
@@ -58,7 +58,7 @@ public class Main {
 		}
 		
 		System.out.println("Versão Paralela");
-		System.out.println("Soma: " + somaVet(VetC, size));
+		//System.out.println("Soma: " + somaVet(VetC, size));
 	}
 	
 }
