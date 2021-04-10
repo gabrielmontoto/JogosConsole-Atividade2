@@ -1,64 +1,54 @@
 package main;
 
+import java.util.Random;
+
 public class Main {
 
-	public static void inicializa(float[] vet, int max) {
-		for (int i = 0; i < vet.length; i++)
-			vet[i] = (float) (Math.random() * (float)max);
-	}
-	
-	public static void processor(float[] A, float[] B, float[] C, int n) {
-		for (int i = 0; i < n; i++)
-			C[i] = A[i] + B[i];
-	}
-	
-	public static float somaVet(float[] C, int n) {
-		float sum = 0;
-		for (int i = 0; i < n; i++)
-			sum += C[i];
-		
-		return sum;
-	}
+
 	
 	public static void main(String args[]) {
-		int size = 20;
-		int nThreads = 2;
-		int elemThread = size / nThreads;
+		int grilosmin = 2;
+		int grilosMax = 8;
+		Random rand = new Random();
+		int grilosNaPartida = rand.nextInt(grilosMax + 1);
+		if(grilosNaPartida<2)
+		{
+			grilosNaPartida=2;
+		}
 		
-		float [] vetA = new float[size];
-		float [] vetB = new float[size];
-		float [] vetC = new float[size];
+		int distancia = 400;
+		int tamanhoPulo;
+		int tamanhoMaximoPulo = 80;
+
+		int nThreads = grilosNaPartida;
+		int elemThread = grilosNaPartida / nThreads;
 		
-		ThreadProcessor threads[] = new ThreadProcessor[nThreads];
-		
-		inicializa(vetA, 2);
-		inicializa(vetB, 3);
-		
-		processor(vetA, vetB, vetC, size);
-		
-		System.out.println("Versão Sequencial");
-		//System.out.println("Soma: " + somaVet(VetC, size));
-		
-		for (int i = 0; i < nThreads; i++) {
+		//System.out.println(grilosNaPartida);
+		ThreadProcessor threads[] = new ThreadProcessor[grilosNaPartida];
+
+		for(int i=0; i<grilosNaPartida;i++)
+		{
 			int start = i * elemThread;
 			int end = start + elemThread;
-			threads[i] = new ThreadProcessor(vetA, vetB, vetC, start, end);
+			threads[i] = new ThreadProcessor("O Grilo_"+(i+1),0,distancia,tamanhoMaximoPulo,start,end);
 			threads[i].start();
 		}
 		
-		for (int i = 0; i < nThreads; i++) {
-			try {
-				threads[i].join();
-			}
+		{
 			
-			catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			
+			for (int i = 0; i < nThreads; i++) {
+				try {
+					threads[i].join();
+				}
+				
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		//	z++;
 		}
-		
-		System.out.println("Versão Paralela");
-		//System.out.println("Soma: " + somaVet(VetC, size));
 	}
 	
 }
