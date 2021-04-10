@@ -8,12 +8,12 @@ public class Main {
 	
 	public static void main(String args[]) {
 		int grilosmin = 2;
-		int grilosMax = 8;
+		int grilosMax = 10;
 		Random rand = new Random();
 		int grilosNaPartida = rand.nextInt(grilosMax + 1);
-		if(grilosNaPartida<2)
+		if(grilosNaPartida<grilosmin)
 		{
-			grilosNaPartida=2;
+			grilosNaPartida=grilosmin;
 		}
 		
 		int distancia = 400;
